@@ -964,7 +964,6 @@ download the executable.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='0603_LED' show='0' pos='1.00000,-3.20000'/>
 			<FIELD type='0' description='Value' value='Blue' show='1' pos='-3.00000,-0.60000'/>
-			<FIELD type='3' description='Mantech' value='13M1823' show='0' pos='0.00000,2.40000'/>
 		</SYMBOL>
 		<WIRE a='153.00000,102.00000' b='153.00000,103.00000'/>
 		<POWER pos='146.00000,122.00000' which='1' direction='2'>Ch3</POWER>
@@ -1030,7 +1029,6 @@ download the executable.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='0603_LED' show='0' pos='1.00000,-3.20000'/>
 			<FIELD type='0' description='Value' value='Blue' show='1' pos='-3.00000,-0.60000'/>
-			<FIELD type='3' description='Mantech' value='13M1823' show='0' pos='0.00000,2.40000'/>
 		</SYMBOL>
 		<WIRE a='188.00000,101.00000' b='188.00000,102.00000'/>
 		<POWER pos='181.00000,121.00000' which='1' direction='2'>Ch4</POWER>
@@ -1065,7 +1063,6 @@ download the executable.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='0603_LED' show='0' pos='1.00000,-3.20000'/>
 			<FIELD type='0' description='Value' value='Blue' show='1' pos='-3.00000,-0.60000'/>
-			<FIELD type='3' description='Mantech' value='13M1823' show='0' pos='0.00000,2.40000'/>
 		</SYMBOL>
 		<WIRE a='223.00000,101.00000' b='223.00000,102.00000'/>
 		<POWER pos='216.00000,121.00000' which='1' direction='2'>Ch5</POWER>
@@ -1135,7 +1132,6 @@ download the executable.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='0603_LED' show='0' pos='1.00000,-3.20000'/>
 			<FIELD type='0' description='Value' value='Blue' show='1' pos='-3.00000,-0.60000'/>
-			<FIELD type='3' description='Mantech' value='13M1823' show='0' pos='0.00000,2.40000'/>
 		</SYMBOL>
 		<WIRE a='83.00000,102.00000' b='83.00000,103.00000'/>
 		<POWER pos='76.00000,122.00000' which='1' direction='2'>Ch1</POWER>
@@ -1170,7 +1166,6 @@ download the executable.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='0603_LED' show='0' pos='1.00000,-3.20000'/>
 			<FIELD type='0' description='Value' value='Blue' show='1' pos='-3.00000,-0.60000'/>
-			<FIELD type='3' description='Mantech' value='13M1823' show='0' pos='0.00000,2.40000'/>
 		</SYMBOL>
 		<WIRE a='118.00000,102.00000' b='118.00000,103.00000'/>
 		<POWER pos='111.00000,122.00000' which='1' direction='2'>Ch2</POWER>
