@@ -19,16 +19,6 @@ download the executable.-->
 			<DATE>2019-10-27</DATE>
 			<GRID spacing='50.00000' snap='1'/>
 		</DETAILS>
-		<FONT id='0'>
-			<HEIGHT>-13</HEIGHT>
-			<WIDTH>6</WIDTH>
-			<WEIGHT>400</WEIGHT>
-			<ITALIC>0</ITALIC>
-			<UNDERLINE>0</UNDERLINE>
-			<STRIKEOUT>0</STRIKEOUT>
-			<CHARSET>0</CHARSET>
-			<FACENAME>Arial</FACENAME>
-		</FONT>
 		<FONT id='1'>
 			<HEIGHT>-10</HEIGHT>
 			<WIDTH>0</WIDTH>
@@ -40,6 +30,16 @@ download the executable.-->
 			<FACENAME>Arial</FACENAME>
 		</FONT>
 		<FONT id='3'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>400</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='4'>
 			<HEIGHT>-13</HEIGHT>
 			<WIDTH>6</WIDTH>
 			<WEIGHT>400</WEIGHT>
@@ -929,7 +929,7 @@ download the executable.-->
 			<FIELD type='1' description='Package' value='0603' show='0' pos='-2.00000,6.80000'/>
 			<FIELD type='0' description='Value' value='DNP' show='1' pos='0.00000,-1.60000'/>
 		</SYMBOL>
-		<NOTE_TEXT a='240.00000,47.00000' b='264.00000,54.00000' direction='3' style='4' fill='3' font='3' color='FF0000' border_style='1'>Address Select</NOTE_TEXT>
+		<NOTE_TEXT a='240.00000,47.00000' b='264.00000,54.00000' direction='3' style='4' fill='3' font='4' color='FF0000' border_style='1'>Address Select</NOTE_TEXT>
 		<POWER pos='227.00000,59.00000' which='3' direction='1'>Gnd</POWER>
 		<WIRE a='227.00000,47.00000' b='227.00000,59.00000'/>
 		<WIRE a='227.00000,37.00000' b='227.00000,32.00000'/>
@@ -1046,7 +1046,7 @@ download the executable.-->
 		<JUNCTION pos='36.00000,47.00000'/>
 		<JUNCTION pos='220.00000,29.00000'/>
 		<JUNCTION pos='227.00000,32.00000'/>
-		<NOTE_TEXT a='67.00000,148.00000' b='134.00000,162.00000' direction='3' style='4' fill='3' font='3' color='FF0000' border_style='1'>Vth in low = 495 mV
+		<NOTE_TEXT a='67.00000,148.00000' b='134.00000,162.00000' direction='3' style='4' fill='3' font='4' color='FF0000' border_style='1'>Vth in low = 495 mV
 Vth in high = 1.625 V
 RA2 is Schmitt triggered at 660 mV and 2.64 mV</NOTE_TEXT>
 		<POWER pos='71.00000,169.00000' which='1' direction='2'>Tx</POWER>
@@ -1544,7 +1544,7 @@ RA2 is Schmitt triggered at 660 mV and 2.64 mV</NOTE_TEXT>
 		<JUNCTION pos='79.00000,31.00000'/>
 		<JUNCTION pos='71.00000,31.00000'/>
 		<JUNCTION pos='63.00000,31.00000'/>
-		<NOTE_TEXT a='178.00000,48.00000' b='215.00000,58.00000' direction='3' style='4' fill='4' font='0' color='FF0000' border_style='1'>Program with the
+		<NOTE_TEXT a='178.00000,48.00000' b='215.00000,58.00000' direction='3' style='4' fill='4' font='3' color='FF0000' border_style='1'>Program with the
 programmer providing 5V</NOTE_TEXT>
 	</TinyCAD>
 </TinyCADSheets>

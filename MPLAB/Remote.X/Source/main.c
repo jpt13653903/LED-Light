@@ -51,9 +51,9 @@ interrupt void OnInterrupt(){
     case Idle:
       Count++;
       if(Count == 3){
-        Data = PORTA;
-        Data = (Data << 6) | PORTC;
-        Data = (Data << 1) | Parity(Data);
+        Data = (PORTAbits.RA3 << 2) | (PORTAbits.RA0 << 1) | PORTAbits.RA1; // Address
+        Data = (Data << 8) | ((PORTA & 0x30) << 2) | PORTC; // Buttons
+        Data = (Data << 1) | Parity(Data); // Parity
 
         Count = 0;
         State = SendEdge;
@@ -95,7 +95,7 @@ void main(){
   OPTION_REGbits.nRAPU = 1; // Disable weak pull-ups
   OPTION_REGbits.T0CS  = 0; // Timer 0 uses internal clock
   OPTION_REGbits.PSA   = 0; // Prescaler assigned to Timer 0
-  OPTION_REGbits.PS    = 1; // Timer 0 rate => 4 μs clock / 1.024 ms interrupt
+  OPTION_REGbits.PS    = 2; // Timer 0 rate => 8 μs clock / 2.048 ms interrupt
 
   CMCONbits .CM   = 7; // Switch off the comparators
   ADCON0bits.ADON = 0; // Switch off the ADC
