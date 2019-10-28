@@ -31,12 +31,7 @@
 #define false 0
 //------------------------------------------------------------------------------
 
-#define LED       PORTCbits.RC4
-#define Tx        PORTCbits.RC5
-#define Knob1     PORTAbits.RA4
-#define Knob2     PORTAbits.RA5
-#define Buttons  (PORTC & 0x0F)
-#define Interrupt PORTAbits.RA2
+#define Tx PORTAbits.RA2
 //------------------------------------------------------------------------------
 
 #endif

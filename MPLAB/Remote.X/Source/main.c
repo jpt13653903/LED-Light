@@ -22,175 +22,95 @@
 #include "global.h"
 //------------------------------------------------------------------------------
 
-bool Active      = false;
-byte ActiveCount = 0;
-byte Knob        = 0;
-//------------------------------------------------------------------------------
-
-void MakeActive(){
- Active      = true;
- ActiveCount = 0;
-
- Interrupt        = 1;
- TRISC            = 0xCF;
- TRISAbits.TRISA2 = 0;
-
- INTCONbits.INTE = 0;
- INTCONbits.T0IE = 1;
-}
-//------------------------------------------------------------------------------
-
-void OnKnobChange(){
- static byte Prev = 0;
- 
- byte Next = (Knob2 << 1) | Knob1;
-
- switch((Prev << 4) | Next){
-  case 0x01:
-  case 0x13:
-  case 0x32:
-  case 0x20:
-   Knob++;
-   break;
-
-  case 0x02:
-  case 0x10:
-  case 0x31:
-  case 0x23:
-   Knob--;
-   break;
-
-  default:
-   break;
- }
-
- Prev = Next;
-}
-//------------------------------------------------------------------------------
-
 byte Parity(word Data){
- byte Result;
+  byte Result;
 
- Result = (Data   & 0xFF) ^ (Data   >> 8);
- Result = (Result & 0x0F) ^ (Result >> 4);
- Result = (Result & 0x03) ^ (Result >> 2);
- Result = (Result & 0x01) ^ (Result >> 1);
- 
- // Has to be odd parity to ensure that the final edge is falling
- return (~Result) & 1;
+  Result = (Data   & 0xFF) ^ (Data   >> 8);
+  Result = (Result & 0x0F) ^ (Result >> 4);
+  Result = (Result & 0x03) ^ (Result >> 2);
+  Result = (Result & 0x01) ^ (Result >> 1);
+  
+  // Has to be odd parity to ensure that the final edge is falling
+  return (~Result) & 1;
 }
 //------------------------------------------------------------------------------
 
-void OnTimer(){
- typedef enum STATE_TAG{
-  Idle,
-  SendEdge,
-  SendData
- } STATE;
- 
- static STATE State = Idle;
- static byte  Count = 0;
- static word  Data;
-
- switch(State){
-  case Idle:
-   Count++;
-   if(Count == 3){
-    Data = Buttons;
-    Data = (Data << 8) | Knob;
-    Data = (Data << 4) | Parity(Data);
-
-    Count = 0;
-    State = SendEdge;
-   }
-   break;
-
-  case SendEdge:
-   Tx = !Tx;
-
-   if(Count == 16){
-    ActiveCount++;
-    if(ActiveCount > 25) Active = false;
-
-    Count = 0;
-    State = Idle;
-
-   }else{
-    State = SendData;
-   }
-   break;
-
-  case SendData:
-   if(Data & 0x8000) Tx = !Tx;
-   Data = Data << 1;
-
-   Count++;
-   State = SendEdge;
-
-   break;
-
-  default:
-   break;
- }
-}
-//------------------------------------------------------------------------------
-
+// Interrupt on timer 0
 interrupt void OnInterrupt(){
- // Interrupt-on-change, port A
- if(INTCONbits.RAIF){
-  MakeActive    ();
-  INTCONbits.RAIF = 0;
- }
+  typedef enum{
+    Idle,
+    SendEdge,
+    SendData
+  } STATE;
+  
+  static STATE State = Idle;
+  static byte  Count = 0;
+  static word  Data;
 
- // Interrupt on falling edge of INT pin
- if(INTCONbits.INTF){
-  MakeActive();
-  INTCONbits.INTF = 0;
- }
+  switch(State){
+    case Idle:
+      Count++;
+      if(Count == 3){
+        Data = PORTA;
+        Data = (Data << 6) | PORTC;
+        Data = (Data << 1) | Parity(Data);
 
- // Interrupt on Timer 0 overflow
- if(INTCONbits.T0IF){
-  if(Buttons) ActiveCount = 0;
+        Count = 0;
+        State = SendEdge;
+      }
+      break;
+    //--------------------------------------------------------------------------
 
-  OnKnobChange(); // Uses slow-sampling to de-bounce: sample every 500 μs
+    case SendEdge:
+      Tx = !Tx;
 
-  OnTimer();
+      if(Count == 16){
+        Count = 0;
+        State = Idle;
+
+      }else{
+        State = SendData;
+      }
+      break;
+    //--------------------------------------------------------------------------
+
+    case SendData:
+      if(Data & 0x8000) Tx = !Tx;
+      Data = Data << 1;
+
+      Count++;
+      State = SendEdge;
+
+      break;
+    //--------------------------------------------------------------------------
+
+    default: break;
+  }
 
   INTCONbits.T0IF = 0;
- }
-
- INTCONbits.T0IE = Active;
- LED             = Active;
 }
 //------------------------------------------------------------------------------
 
 void main(){
- OPTION_REGbits.nRAPU  = 1; // Disable weak pull-ups
- OPTION_REGbits.INTEDG = 0; // Interrupt on falling edge of INT pin
- OPTION_REGbits.T0CS   = 0; // Timer 0 uses internal clock
- OPTION_REGbits.PSA    = 0; // Prescaler assigned to Timer 0
- OPTION_REGbits.PS     = 0; // Timer 0 rate => 2 μs clock / 512 μs interrupt
+  OPTION_REGbits.nRAPU = 1; // Disable weak pull-ups
+  OPTION_REGbits.T0CS  = 0; // Timer 0 uses internal clock
+  OPTION_REGbits.PSA   = 0; // Prescaler assigned to Timer 0
+  OPTION_REGbits.PS    = 1; // Timer 0 rate => 4 μs clock / 1.024 ms interrupt
 
- CMCONbits .CM   = 7; // Switch off the comparators
- ADCON0bits.ADON = 0; // Switch off the ADC
+  CMCONbits .CM   = 7; // Switch off the comparators
+  ADCON0bits.ADON = 0; // Switch off the ADC
 
- ANSEL = 0; // Disable analogue functionality
- WPUA  = 0; // Disable weak pull-up on port A
+  ANSEL = 0; // Disable analogue functionality
+  WPUA  = 0; // Disable weak pull-up on port A
 
- IOCA            = 0x30; // Interrupt-on-change on A4 and A5
- INTCONbits.RAIE = 1;    // Enable port A interrupt-on-change
+  PORTA = 0;
+  PORTC = 0;
+  TRISA = 0xFB; // Only RA2 is an output
+  TRISC = 0xFF;
 
- while(1){
-  if(!Active){
-   INTCONbits.GIE = 0;
-    PORTC = 0;
-    TRISA = 0xFF;
-    TRISC = 0xC0;
-    INTCONbits.INTF = 0;
-    INTCONbits.INTE = 1;
-   INTCONbits.GIE = 1;
-   SLEEP();
-  }
- }
+  INTCONbits.T0IE = 1;
+  INTCONbits.GIE  = 1;
+
+  while(1);
 }
 //------------------------------------------------------------------------------
