@@ -1527,7 +1527,7 @@ RA2 is Schmitt triggered at 660 mV and 2.64 mV</NOTE_TEXT>
 		<POWER pos='79.00000,45.00000' which='3' direction='1'>Gnd</POWER>
 		<WIRE a='79.00000,44.00000' b='79.00000,45.00000'/>
 		<WIRE a='79.00000,34.00000' b='79.00000,31.00000'/>
-		<WIRE a='89.00000,31.00000' b='79.00000,31.00000'/>
+		<WIRE a='87.00000,31.00000' b='79.00000,31.00000'/>
 		<SYMBOL id='2' pos='135.00000,44.00000' part='0' rotate='3' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='R25' show='1' pos='0.00000,-7.00000'/>
 			<FIELD type='2' description='Name' value='R' show='0' pos='0.00000,0.00000'/>
@@ -1546,5 +1546,19 @@ RA2 is Schmitt triggered at 660 mV and 2.64 mV</NOTE_TEXT>
 		<JUNCTION pos='63.00000,31.00000'/>
 		<NOTE_TEXT a='178.00000,48.00000' b='215.00000,58.00000' direction='3' style='4' fill='4' font='3' color='FF0000' border_style='1'>Program with the
 programmer providing 5V</NOTE_TEXT>
+		<SYMBOL id='12' pos='106.00000,25.00000' part='0' rotate='4' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+			<FIELD type='0' description='Ref' value='D10' show='1' pos='-6.00000,-4.00000'/>
+			<FIELD type='2' description='Name' value='1N4148' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='1' description='Package' value='DO-35' show='0' pos='1.00000,2.80000'/>
+			<FIELD type='0' description='Value' value='1N4148' show='1' pos='-3.00000,0.40000'/>
+		</SYMBOL>
+		<WIRE a='106.00000,23.00000' b='113.00000,23.00000'/>
+		<WIRE a='113.00000,23.00000' b='113.00000,31.00000'/>
+		<WIRE a='96.00000,23.00000' b='87.00000,23.00000'/>
+		<WIRE a='87.00000,23.00000' b='87.00000,31.00000'/>
+		<JUNCTION pos='87.00000,31.00000'/>
+		<WIRE a='89.00000,31.00000' b='87.00000,31.00000'/>
 	</TinyCAD>
 </TinyCADSheets>

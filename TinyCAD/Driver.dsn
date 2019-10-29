@@ -53,7 +53,7 @@ download the executable.-->
 			<INDEX>-1</INDEX>
 			<COLOR>000000</COLOR>
 		</FILL>
-		<FILL id='3'>
+		<FILL id='2'>
 			<INDEX>0</INDEX>
 			<COLOR>AFFFFF</COLOR>
 		</FILL>
@@ -825,6 +825,66 @@ download the executable.-->
 				<RECTANGLE a='62.00000,37.00000' b='64.00000,35.00000' style='3' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
+		<SYMBOLDEF id='19'>
+			<NAME type='2'>1N4148</NAME>
+			<REF type='0'>D?</REF>
+			<DESCRIPTION>Diode</DESCRIPTION>
+			<PPP>1</PPP>
+			<FIELD>
+				<NAME>$$SPICE_PROLOG_PRIORITY</NAME>
+				<DEFAULT>5</DEFAULT>
+				<FT>000002</FT>
+				<VALUE></VALUE>
+				<POS>0.00000,0.00000</POS>
+			</FIELD>
+			<FIELD>
+				<NAME>$$SPICE_EPILOG_PRIORITY</NAME>
+				<DEFAULT>5</DEFAULT>
+				<FT>000002</FT>
+				<VALUE></VALUE>
+				<POS>0.00000,0.00000</POS>
+			</FIELD>
+			<FIELD>
+				<NAME>Package</NAME>
+				<DEFAULT>DO-35</DEFAULT>
+				<FT>000001</FT>
+				<VALUE></VALUE>
+				<POS>0.00000,0.00000</POS>
+			</FIELD>
+			<FIELD>
+				<NAME>Value</NAME>
+				<DEFAULT>1N4148</DEFAULT>
+				<FT>000000</FT>
+				<VALUE></VALUE>
+				<POS>0.00000,0.00000</POS>
+			</FIELD>
+			<REF_POINT power='0' part='0' pos='70.00000,54.00000'/>
+			<TinyCAD>
+				<PIN pos='60.00000,52.00000' which='0' elec='0' direction='3' part='0' number='1' show='3' length='10' number_pos='0' centre_name='0'></PIN>
+				<PIN pos='70.00000,52.00000' which='0' elec='0' direction='2' part='0' number='2' show='3' length='10' number_pos='0' centre_name='0'></PIN>
+				<POLYGON pos='63.40000,50.40000' style='3' fill='0'>
+					<POINT pos='0.10000,0.10000' arc='0'/>
+					<POINT pos='0.10000,3.10000' arc='0'/>
+				</POLYGON>
+				<POLYGON pos='66.40000,50.40000' style='3' fill='0'>
+					<POINT pos='0.10000,0.10000' arc='0'/>
+					<POINT pos='0.10000,3.10000' arc='0'/>
+				</POLYGON>
+				<POLYGON pos='63.40000,50.40000' style='3' fill='0'>
+					<POINT pos='0.10000,0.10000' arc='0'/>
+					<POINT pos='3.10000,1.60000' arc='0'/>
+					<POINT pos='0.10000,3.10000' arc='0'/>
+				</POLYGON>
+				<POLYGON pos='62.00000,52.00000' style='3' fill='0'>
+					<POINT pos='1.50000,0.00000' arc='0'/>
+					<POINT pos='0.00000,0.00000' arc='0'/>
+				</POLYGON>
+				<POLYGON pos='66.40000,52.00000' style='3' fill='0'>
+					<POINT pos='0.10000,0.00000' arc='0'/>
+					<POINT pos='1.60000,0.00000' arc='0'/>
+				</POLYGON>
+			</TinyCAD>
+		</SYMBOLDEF>
 		<OPTIONS>
 			<GRID>1</GRID>
 			<UNITS>0</UNITS>
@@ -1368,7 +1428,7 @@ download the executable.-->
 		<POWER pos='169.00000,166.00000' which='1' direction='3'>Ch1</POWER>
 		<POWER pos='169.00000,163.00000' which='1' direction='3'>Ch0</POWER>
 		<POWER pos='169.00000,169.00000' which='1' direction='3'>Ch2</POWER>
-		<NOTE_TEXT a='106.00000,142.00000' b='173.00000,156.00000' direction='3' style='4' fill='3' font='3' color='FF0000' border_style='1'>Vth in low = 800 mV
+		<NOTE_TEXT a='106.00000,142.00000' b='173.00000,156.00000' direction='3' style='4' fill='2' font='3' color='FF0000' border_style='1'>Vth in low = 800 mV
 Vth in high = 2 V
 RA2 is Schmitt triggered at 20% and 80% Vcc</NOTE_TEXT>
 		<JUNCTION pos='103.00000,169.00000'/>
@@ -1394,5 +1454,18 @@ RA2 is Schmitt triggered at 20% and 80% Vcc</NOTE_TEXT>
 		<JUNCTION pos='89.00000,169.00000'/>
 		<WIRE a='91.00000,169.00000' b='89.00000,169.00000'/>
 		<WIRE a='103.00000,167.00000' b='103.00000,169.00000'/>
+		<SYMBOL id='19' pos='85.00000,29.00000' part='0' rotate='4' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+			<FIELD type='0' description='Ref' value='D7' show='1' pos='-6.00000,-4.00000'/>
+			<FIELD type='2' description='Name' value='1N4148' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
+			<FIELD type='1' description='Package' value='DO-35' show='0' pos='1.00000,2.80000'/>
+			<FIELD type='0' description='Value' value='1N4148' show='1' pos='-3.00000,0.40000'/>
+		</SYMBOL>
+		<WIRE a='85.00000,27.00000' b='92.00000,27.00000'/>
+		<WIRE a='92.00000,27.00000' b='92.00000,35.00000'/>
+		<WIRE a='75.00000,27.00000' b='66.00000,27.00000'/>
+		<WIRE a='66.00000,27.00000' b='66.00000,35.00000'/>
+		<JUNCTION pos='66.00000,35.00000'/>
 	</TinyCAD>
 </TinyCADSheets>
