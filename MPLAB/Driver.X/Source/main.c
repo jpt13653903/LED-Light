@@ -25,7 +25,15 @@
 byte Address = 0;
 byte Buttons = 0;
 
-bool isOn = false;
+struct CONTROL{
+  unsigned isOn     : 1;
+  unsigned FadeIn0  : 1;
+  unsigned FadeIn1  : 1;
+  unsigned FadeIn2  : 1;
+  unsigned FadeOut0 : 1;
+  unsigned FadeOut1 : 1;
+  unsigned FadeOut2 : 1;
+} Control = {0};
 
 byte DutyCycle0 = 64;
 byte DutyCycle1 = 64;
@@ -37,6 +45,9 @@ dword RawData = 0;
 
 // Interrupt-on-change, port A
 interrupt void OnInterrupt(){
+  byte Bit     = Rx; // Sample to clear the interrupt on change
+  word Decoded = 0;
+
   T1CONbits.TMR1ON  = 0;
     word Time = TMR1; // Time is in μs
     if(PIR1bits.TMR1IF) Time = 0xFFFF;
@@ -44,15 +55,11 @@ interrupt void OnInterrupt(){
     PIR1bits.TMR1IF = 0;
   T1CONbits.TMR1ON  = 1;
   
-  byte Bit = Rx; // Sample to clear the interrupt on change
-
-  if(Time > 10000){
+  if(Time > 5000){
     RawData = 0;
 
-  }else if(Time > 5000){
+  }else if(Time > 2500){
     // Decode -- don't pull into a function: not enough RAM
-    word Decoded = 0;
-
     RawData = (RawData << 1) ^ RawData;
     if((RawData & 0x55555554) == 0x55555554){
       RawData >>= 1;
@@ -74,11 +81,11 @@ interrupt void OnInterrupt(){
     }
     RawData = 0;
 
-  }else if(Time > 3000){
+  }else if(Time > 1500){
     RawData <<= 1; RawData |= Bit;
     RawData <<= 1; RawData |= Bit;
 
-  }else if(Time > 1000){
+  }else if(Time > 500){
     RawData <<= 1; RawData |= Bit;
 
   }else{
@@ -89,63 +96,97 @@ interrupt void OnInterrupt(){
 }
 //------------------------------------------------------------------------------
 
-void AssignLEDs(){
-  if(isOn){
-    PORTC = (((DutyCycle2 > TMR0) & 1) << 2) |
-            (((DutyCycle1 > TMR0) & 1) << 1) |
-            (((DutyCycle0 > TMR0) & 1)     ) ;
-  }else{
-    PORTC = 0;
-  }
-}
-//------------------------------------------------------------------------------
-
 void HandleButtons(byte Buttons){
   static byte PrevButtons = 0;
 
   if(Buttons != PrevButtons){
     byte ButtonDown = (PrevButtons ^ Buttons) & ( Buttons);
-    // byte ButtonUp   = (PrevButtons ^ Buttons) & (~Buttons);
+    byte ButtonUp   = (PrevButtons ^ Buttons) & (~Buttons);
 
     PrevButtons = Buttons;
 
     if(ButtonDown & 0x01){ // Cool white brighter
-      if(!isOn) isOn = true;
-      if     (DutyCycle0 <  0x01) DutyCycle0 = 0x01;
-      else if(DutyCycle0 >= 0x80) DutyCycle0 = 0xFF;
-      else                        DutyCycle0 <<= 1;
+      if(!Control.isOn) Control.isOn = true;
+      Control.FadeIn0 = true;
     }
-    if(ButtonDown & 0x02){ // Natural white brighter
-      if(!isOn) isOn = true;
-      if     (DutyCycle1 <  0x01) DutyCycle1 = 0x01;
-      else if(DutyCycle1 >= 0x80) DutyCycle1 = 0xFF;
-      else                        DutyCycle1 <<= 1;
+    if(ButtonDown & 0x02){ // Cool white brighter
+      if(!Control.isOn) Control.isOn = true;
+      Control.FadeIn1 = true;
     }
-    if(ButtonDown & 0x04){ // Warm white brighter
-      if(!isOn) isOn = true;
-      if     (DutyCycle2 <  0x01) DutyCycle2 = 0x01;
-      else if(DutyCycle2 >= 0x80) DutyCycle2 = 0xFF;
-      else                        DutyCycle2 <<= 1;
+    if(ButtonDown & 0x04){ // Cool white brighter
+      if(!Control.isOn) Control.isOn = true;
+      Control.FadeIn2 = true;
+    }
+    if(ButtonDown & 0x40){ // Cool white brighter
+      Control.FadeOut0 = true;
+    }
+    if(ButtonDown & 0x20){ // Cool white brighter
+      Control.FadeOut1 = true;
+    }
+    if(ButtonDown & 0x10){ // Cool white brighter
+      Control.FadeOut2 = true;
     }
 
-    if(ButtonDown & 0x40){ // Cool white dimmer
-      if(DutyCycle0 > 0x80) DutyCycle0 = 0x80;
-      else                  DutyCycle0 >>= 1;
+    if(ButtonUp & 0x01){ // Cool white brighter
+      Control.FadeIn0 = false;
     }
-    if(ButtonDown & 0x20){ // Natural white dimmer
-      if(DutyCycle1 > 0x80) DutyCycle1 = 0x80;
-      else                  DutyCycle1 >>= 1;
+    if(ButtonUp & 0x02){ // Cool white brighter
+      Control.FadeIn1 = false;
     }
-    if(ButtonDown & 0x10){ // Warm white dimmer
-      if(DutyCycle2 > 0x80) DutyCycle2 = 0x80;
-      else                  DutyCycle2 >>= 1;
+    if(ButtonUp & 0x04){ // Cool white brighter
+      Control.FadeIn2 = false;
+    }
+    if(ButtonUp & 0x40){ // Cool white brighter
+      Control.FadeOut0 = false;
+    }
+    if(ButtonUp & 0x20){ // Cool white brighter
+      Control.FadeOut1 = false;
+    }
+    if(ButtonUp & 0x10){ // Cool white brighter
+      Control.FadeOut2 = false;
     }
 
     if(ButtonDown & 0x08){ // On / Off
-      isOn = !isOn;
+      Control.isOn = !Control.isOn;
     }
     if(ButtonDown & 0x80){ // Mode
     }
+  }
+}
+//------------------------------------------------------------------------------
+
+void DoFading(){
+  static byte PrevTime  = 0;
+  static byte TimeCount = 0;
+
+  byte Time = TMR0;
+
+  if(Time < PrevTime){
+    if(TimeCount = 3){
+      TimeCount = 0;
+
+      if(Control.FadeIn0  && DutyCycle0 < 0xFF) DutyCycle0++;
+      if(Control.FadeIn1  && DutyCycle1 < 0xFF) DutyCycle1++;
+      if(Control.FadeIn2  && DutyCycle2 < 0xFF) DutyCycle2++;
+
+      if(Control.FadeOut0 && DutyCycle0 > 0x00) DutyCycle0--;
+      if(Control.FadeOut1 && DutyCycle1 > 0x00) DutyCycle1--;
+      if(Control.FadeOut2 && DutyCycle2 > 0x00) DutyCycle2--;
+    }else{
+      TimeCount++;
+    }
+  }
+  PrevTime = Time;
+}
+//------------------------------------------------------------------------------
+
+void AssignLEDs(){
+  if(Control.isOn){
+    PORTC = (((DutyCycle2 > TMR0) & 1) << 2) |
+            (((DutyCycle1 > TMR0) & 1) << 1) |
+            (((DutyCycle0 > TMR0) & 1)     ) ;
+  }else{
+    PORTC = 0;
   }
 }
 //------------------------------------------------------------------------------
@@ -180,10 +221,10 @@ void main(){
   TRISC = 0xC0;
 
   while(1){
-    AssignLEDs();
-
     if(PIR1bits.TMR1IF) Buttons = 0;
     HandleButtons(Buttons);
+    DoFading();
+    AssignLEDs();
   }
 }
 //------------------------------------------------------------------------------

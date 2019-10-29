@@ -95,7 +95,7 @@ void main(){
   OPTION_REGbits.nRAPU = 1; // Disable weak pull-ups
   OPTION_REGbits.T0CS  = 0; // Timer 0 uses internal clock
   OPTION_REGbits.PSA   = 0; // Prescaler assigned to Timer 0
-  OPTION_REGbits.PS    = 2; // Timer 0 rate => 8 μs clock / 2.048 ms interrupt
+  OPTION_REGbits.PS    = 1; // Timer 0 rate => 4 μs clock / 1.024 ms interrupt
 
   CMCONbits .CM   = 7; // Switch off the comparators
   ADCON0bits.ADON = 0; // Switch off the ADC
