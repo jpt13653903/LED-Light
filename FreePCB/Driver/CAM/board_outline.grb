@@ -30,11 +30,11 @@ G04 ----------------------- Draw board outline (positive)*
 %LPD*%
 G54D10*
 G01X0Y0D02*
-G01X15748Y0D01*
+G01X23622Y0D01*
 G04 end of side 1*
-G01X15748Y23622D01*
+G01X23622Y15748D01*
 G04 end of side 2*
-G01X0Y23622D01*
+G01X0Y15748D01*
 G04 end of side 3*
 G01X0Y0D01*
 

@@ -182,9 +182,11 @@ void DoFading(){
 
 void AssignLEDs(){
   if(Control.isOn){
-    PORTC = (((DutyCycle2 > TMR0) & 1) << 2) |
-            (((DutyCycle1 > TMR0) & 1) << 1) |
-            (((DutyCycle0 > TMR0) & 1)     ) ;
+    byte Temp = 0;
+    if(DutyCycle0 > TMR0) Temp |= 0x09;
+    if(DutyCycle1 > TMR0) Temp |= 0x12;
+    if(DutyCycle2 > TMR0) Temp |= 0x24;
+    PORTC = Temp;
   }else{
     PORTC = 0;
   }
