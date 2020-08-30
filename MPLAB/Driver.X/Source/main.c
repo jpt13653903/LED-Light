@@ -162,7 +162,7 @@ void DoFading(){
   byte Time = TMR0;
 
   if(Time < PrevTime){
-    if(TimeCount = 3){
+    if(TimeCount == 3){
       TimeCount = 0;
 
       if(Control.FadeIn0  && DutyCycle0 < 0xFF) DutyCycle0++;
