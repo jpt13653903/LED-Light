@@ -106,44 +106,44 @@ void HandleButtons(byte Buttons){
     PrevButtons = Buttons;
 
     if(ButtonDown & 0x01){ // Cool white brighter
+      Control.FadeOut0 = true;
+    }
+    if(ButtonDown & 0x02){ // Cool white brighter
+      Control.FadeOut1 = true;
+    }
+    if(ButtonDown & 0x04){ // Cool white brighter
+      Control.FadeOut2 = true;
+    }
+    if(ButtonDown & 0x40){ // Cool white brighter
       if(!Control.isOn) Control.isOn = true;
       Control.FadeIn0 = true;
     }
-    if(ButtonDown & 0x02){ // Cool white brighter
+    if(ButtonDown & 0x20){ // Cool white brighter
       if(!Control.isOn) Control.isOn = true;
       Control.FadeIn1 = true;
     }
-    if(ButtonDown & 0x04){ // Cool white brighter
+    if(ButtonDown & 0x10){ // Cool white brighter
       if(!Control.isOn) Control.isOn = true;
       Control.FadeIn2 = true;
     }
-    if(ButtonDown & 0x40){ // Cool white brighter
-      Control.FadeOut0 = true;
-    }
-    if(ButtonDown & 0x20){ // Cool white brighter
-      Control.FadeOut1 = true;
-    }
-    if(ButtonDown & 0x10){ // Cool white brighter
-      Control.FadeOut2 = true;
-    }
 
     if(ButtonUp & 0x01){ // Cool white brighter
-      Control.FadeIn0 = false;
-    }
-    if(ButtonUp & 0x02){ // Cool white brighter
-      Control.FadeIn1 = false;
-    }
-    if(ButtonUp & 0x04){ // Cool white brighter
-      Control.FadeIn2 = false;
-    }
-    if(ButtonUp & 0x40){ // Cool white brighter
       Control.FadeOut0 = false;
     }
-    if(ButtonUp & 0x20){ // Cool white brighter
+    if(ButtonUp & 0x02){ // Cool white brighter
       Control.FadeOut1 = false;
     }
-    if(ButtonUp & 0x10){ // Cool white brighter
+    if(ButtonUp & 0x04){ // Cool white brighter
       Control.FadeOut2 = false;
+    }
+    if(ButtonUp & 0x40){ // Cool white brighter
+      Control.FadeIn0 = false;
+    }
+    if(ButtonUp & 0x20){ // Cool white brighter
+      Control.FadeIn1 = false;
+    }
+    if(ButtonUp & 0x10){ // Cool white brighter
+      Control.FadeIn2 = false;
     }
 
     if(ButtonDown & 0x08){ // On / Off
